@@ -1,5 +1,6 @@
 package com.example.backend.domain.comment;
 
+import com.example.backend.domain.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -18,7 +19,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text;
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
     @NotNull
     private boolean isAnonymous;
     @CreationTimestamp
