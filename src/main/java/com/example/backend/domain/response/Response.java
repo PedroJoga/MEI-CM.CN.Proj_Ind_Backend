@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
@@ -28,8 +29,10 @@ public class Response {
     @JoinColumn(name = "user_id")
     private User userId;
     @NotNull
+    @ColumnDefault("false")
     private boolean isAnonymous;
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "comment_id")
     private Comment comment;
     @CreationTimestamp

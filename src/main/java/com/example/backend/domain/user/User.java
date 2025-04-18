@@ -1,6 +1,7 @@
 package com.example.backend.domain.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userPhotoLink;
+    @NotNull
+    @Column(unique=true)
     private String username;
+    @NotNull
+    @Column(unique=true)
     private String email;
     private String password;
 
