@@ -25,7 +25,6 @@ public class User {
     private Long id;
     private String userPhotoLink;
     @NotNull
-    @Column(unique=true)
     private String username;
     @NotNull
     @Email

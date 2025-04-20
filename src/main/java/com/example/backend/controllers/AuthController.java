@@ -1,8 +1,6 @@
 package com.example.backend.controllers;
 
-import com.example.backend.dto.LoginRequestDTO;
-import com.example.backend.dto.RegisterRequestDTO;
-import com.example.backend.dto.ResponseDTO;
+import com.example.backend.dto.*;
 import com.example.backend.infra.security.TokenService;
 import com.example.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +28,7 @@ public class AuthController {
 
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
+            return ResponseEntity.ok(new LoginResponseDTO(new UserResponseDTO(user.getUsername(), user.getEmail(), user.getUserPhotoLink()), token));
         }
         return ResponseEntity.badRequest().build();
     }
@@ -49,6 +47,6 @@ public class AuthController {
         this.repository.save(newUser);
 
         String token = this.tokenService.generateToken(newUser);
-        return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
+        return ResponseEntity.ok(new LoginResponseDTO(new UserResponseDTO(newUser.getUsername(), newUser.getEmail(), newUser.getUserPhotoLink()), token));
     }
 }

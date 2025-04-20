@@ -24,14 +24,12 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
-    public CommentResponseDTO addComment(CommentRequestDTO commentRequestDTO) {
-        User user = userRepository.findById(commentRequestDTO.userId())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+    public CommentResponseDTO addComment(String text, User user, boolean isAnonymous) {
 
         Comment comment = new Comment();
-        comment.setText(commentRequestDTO.text());
+        comment.setText(text);
         comment.setUser(user);
-        comment.setAnonymous(commentRequestDTO.isAnonymous());
+        comment.setAnonymous(isAnonymous);
 
         Comment savedComment = commentRepository.save(comment);
         return new CommentResponseDTO(

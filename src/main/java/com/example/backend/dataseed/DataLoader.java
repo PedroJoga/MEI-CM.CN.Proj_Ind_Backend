@@ -37,11 +37,13 @@ public class DataLoader implements CommandLineRunner {
         }
 
         User user1 = new User();
+        user1.setUserPhotoLink("https://github.com/PedroJoga.png");
         user1.setUsername("pedro");
         user1.setEmail("pedro@mail.com");
         user1.setPassword(passwordEncoder.encode("123"));
 
         User user2 = new User();
+        user2.setUserPhotoLink("https://github.com/PedroJoga.png");
         user2.setUsername("joao");
         user2.setEmail("joao@mail.com");
         user2.setPassword(passwordEncoder.encode("123"));

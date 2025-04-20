@@ -1,4 +1,4 @@
 package com.example.backend.dto;
 
-public record CommentRequestDTO(String text, Long userId, boolean isAnonymous) {
+public record CommentRequestDTO(String text, boolean isAnonymous) {
 }

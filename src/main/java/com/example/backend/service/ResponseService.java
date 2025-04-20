@@ -24,17 +24,15 @@ public class ResponseService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseResponseDTO addResponse(ResponseRequestDTO responseRequestDTO) {
-        User user = userRepository.findById(responseRequestDTO.userId())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+    public ResponseResponseDTO addResponse(String text, User user, boolean isAnonymous, Long commentId) {
 
-        Comment comment = commentRepository.findById(responseRequestDTO.commentId())
+        Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("Comment not found."));
 
         Response response = new Response();
-        response.setText(responseRequestDTO.text());
+        response.setText(text);
         response.setUser(user);
-        response.setAnonymous(responseRequestDTO.isAnonymous());
+        response.setAnonymous(isAnonymous);
         response.setComment(comment);
 
         Response savedResponse = responseRepository.save(response);
