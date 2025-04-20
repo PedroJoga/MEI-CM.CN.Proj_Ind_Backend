@@ -11,7 +11,7 @@ public class BackendApplication {
 
 	@RequestMapping("/")
 	public String home() {
-		return "Hello Docker World";
+		return "Backend API ready.";
 	}
 
 	public static void main(String[] args) {

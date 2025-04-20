@@ -40,6 +40,7 @@ public class DataLoader implements CommandLineRunner {
         user1.setUsername("pedro");
         user1.setEmail("pedro@mail.com");
         user1.setPassword(passwordEncoder.encode("123"));
+
         User user2 = new User();
         user2.setUsername("joao");
         user2.setEmail("joao@mail.com");
@@ -50,25 +51,25 @@ public class DataLoader implements CommandLineRunner {
 
         Comment comment1 = new Comment();
         comment1.setText("Have you ever noticed how we only realize a moment was truly happy after it's already gone?");
-        comment1.setUserId(user1);
+        comment1.setUser(user1);
         comment1.setAnonymous(true);
 
         Comment comment2 = new Comment();
         comment2.setText("Sometimes silence is the best answer, but it's hard to know when to use it.");
-        comment2.setUserId(user1);
+        comment2.setUser(user1);
 
         Comment comment3 = new Comment();
         comment3.setText("If everything is a matter of perspective, does 'right' and 'wrong' really exist?");
-        comment3.setUserId(user1);
+        comment3.setUser(user1);
 
         Comment comment4 = new Comment();
         comment4.setText("Some connections happen so naturally, it feels like they were written somewhere long before we met.");
-        comment4.setUserId(user2);
+        comment4.setUser(user2);
         comment4.setAnonymous(true);
 
         Comment comment5 = new Comment();
         comment5.setText("Isn’t it strange how some days feel heavier than others, even when nothing’s really different?");
-        comment5.setUserId(user2);
+        comment5.setUser(user2);
 
         commentRepository.save(comment1);
         commentRepository.save(comment2);
@@ -78,28 +79,28 @@ public class DataLoader implements CommandLineRunner {
 
         Response response1 = new Response();
         response1.setText("Yeah, it's like nostalgia adds value that we didn't see when we were actually living it.");
-        response1.setUserId(user2);
+        response1.setUser(user2);
         response1.setAnonymous(true);
         response1.setComment(comment1);
 
         Response response2 = new Response();
         response2.setText("Maybe it's because we’re too busy chasing the next thing to fully appreciate the now.");
-        response2.setUserId(user2);
+        response2.setUser(user2);
         response2.setComment(comment1);
 
         Response response3 = new Response();
         response3.setText("True. Silence can speak volumes… but it can also be misunderstood if timed wrong.");
-        response3.setUserId(user2);
+        response3.setUser(user2);
         response3.setComment(comment2);
 
         Response response4 = new Response();
         response4.setText("Exactly, like meeting an old soul again—some people just make sense instantly.");
-        response4.setUserId(user1);
+        response4.setUser(user1);
         response4.setComment(comment4);
 
         Response response5 = new Response();
         response5.setText("Yeah, it’s like the weight isn’t in the day itself, but in how we’re carrying it.");
-        response5.setUserId(user1);
+        response5.setUser(user1);
         response5.setAnonymous(true);
         response5.setComment(comment5);
 
