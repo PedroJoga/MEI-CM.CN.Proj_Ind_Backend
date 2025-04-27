@@ -20,20 +20,20 @@ public class ResponseController {
     @Autowired
     private ResponseService responseService;
 
-    @PostMapping("/")
-    public ResponseEntity<ResponseResponseDTO> addResponse(Authentication authentication, @RequestBody @Valid ResponseRequestDTO body) {
+    @PostMapping("")
+    public ResponseEntity addResponse(Authentication authentication, @RequestBody @Valid ResponseRequestDTO body) {
         User user = null;
         boolean isAnonymous = body.isAnonymous();
 
         if (authentication == null || !authentication.isAuthenticated()) {
-            // Guest
+            // Guest, so always true
             isAnonymous = true;
         } else {
             user = (User) authentication.getPrincipal();
         }
 
-        ResponseResponseDTO responseResponseDTO = responseService.addResponse(body.text(), user, isAnonymous, body.commentId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseResponseDTO);
+        responseService.addResponse(body.text(), user, isAnonymous, body.commentId());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/comment/{commentId}")

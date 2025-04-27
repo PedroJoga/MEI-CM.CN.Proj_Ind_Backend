@@ -24,7 +24,7 @@ public class ResponseService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseResponseDTO addResponse(String text, User user, boolean isAnonymous, Long commentId) {
+    public void addResponse(String text, User user, boolean isAnonymous, Long commentId) {
 
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("Comment not found."));
@@ -35,14 +35,7 @@ public class ResponseService {
         response.setAnonymous(isAnonymous);
         response.setComment(comment);
 
-        Response savedResponse = responseRepository.save(response);
-        return new ResponseResponseDTO(
-                savedResponse.getId(),
-                savedResponse.getText(),
-                savedResponse.getUser().getUserPhotoLink(),
-                savedResponse.getUser().getUsername(),
-                savedResponse.getCreatedAt()
-        );
+        responseRepository.save(response);
     }
 
     public List<ResponseResponseDTO> getResponsesByComment(Long commentId) {

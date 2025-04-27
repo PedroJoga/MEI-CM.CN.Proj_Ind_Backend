@@ -3,6 +3,7 @@ package com.example.backend.controllers;
 import com.example.backend.domain.user.User;
 import com.example.backend.dto.CommentRequestDTO;
 import com.example.backend.dto.CommentResponseDTO;
+import com.example.backend.dto.SuggestionResponseDTO;
 import com.example.backend.service.CommentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,31 +21,45 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/")
-    public ResponseEntity<CommentResponseDTO> addComment(Authentication authentication, @RequestBody @Valid CommentRequestDTO body) {
+    @PostMapping("")
+    public ResponseEntity addComment(Authentication authentication, @RequestBody @Valid CommentRequestDTO body) {
         User user = null;
         boolean isAnonymous = body.isAnonymous();
 
         if (authentication == null || !authentication.isAuthenticated()) {
-            // Guest
+            // Guest, so always true
             isAnonymous = true;
         } else {
             user = (User) authentication.getPrincipal();
         }
 
-        CommentResponseDTO commentResponseDTO = commentService.addComment(body.text(), user, isAnonymous);
-        return ResponseEntity.status(HttpStatus.CREATED).body(commentResponseDTO);
+        commentService.addComment(body.text(), user, isAnonymous);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<CommentResponseDTO>> getCommentsByUser(@PathVariable Long userId) { // TODO usar token em vez de userId
-        List<CommentResponseDTO> comments = commentService.getCommentsByUser(userId);
+    @GetMapping("/user")
+    public ResponseEntity<List<CommentResponseDTO>> getCommentsByUser(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        List<CommentResponseDTO> comments = commentService.getCommentsByUser(user);
         return ResponseEntity.ok(comments);
     }
 
     @GetMapping("/random")
-    public ResponseEntity<CommentResponseDTO> getRandomComment() {
-        CommentResponseDTO randomComment = commentService.getRandomComment();
+    public ResponseEntity<CommentResponseDTO> getRandomComment(Authentication authentication) {
+        User user = null;
+        if (authentication != null && authentication.isAuthenticated()) {
+            user = (User) authentication.getPrincipal();
+        }
+
+        CommentResponseDTO randomComment = commentService.getRandomComment(user);
         return ResponseEntity.ok(randomComment);
+    }
+
+    @GetMapping("/{commentId}/suggestions")
+    public ResponseEntity<List<SuggestionResponseDTO>> getCommentSuggestions(@PathVariable Long commentId) {
+
+        List<SuggestionResponseDTO> suggestions = commentService.getCommentSuggestions(commentId);
+        //String suggestions = commentService.getCommentSuggestions(commentId);
+        return ResponseEntity.ok(suggestions);
     }
 }
