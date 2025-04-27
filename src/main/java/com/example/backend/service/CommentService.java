@@ -9,8 +9,6 @@ import com.example.backend.repositories.ResponseRepository;
 import com.example.backend.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -44,7 +42,7 @@ public class CommentService {
     @Value("${gemini.api.key}")
     private String geminiApiKey;
 
-    private static final String GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent";
+    private static final String GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
     public void addComment(String text, User user, boolean isAnonymous) {
 
@@ -133,7 +131,7 @@ public class CommentService {
 
     private String buildPrompt(String commentText) {
         return String.format(
-                "Write 3 suggestions with a maximum of 20 words, only for the following text that is delimited by four at-signs at the beginning and end (Notes: Write in the language of the delimited text (probably Portuguese or English); The suggestions must also be delimited by 4 at-signs at the beginning and end; Do not use line breaks). @@@@ %s @@@@",
+                "Write 3 suggestions with a maximum of 20 words, only for the following text that is delimited by 4 at-signs (@) at the beginning and end (Notes: Write in the language of the delimited text (probably Portuguese or English); The suggestions must also be delimited by 4 at-signs (@) at the beginning and end; Do not use line breaks). @@@@ %s @@@@",
                 commentText
         );
     }
