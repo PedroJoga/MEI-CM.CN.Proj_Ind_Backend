@@ -131,7 +131,7 @@ public class CommentService {
 
     private String buildPrompt(String commentText) {
         return String.format(
-                "Write 3 suggestions with a maximum of 20 words, only for the following text that is delimited by 4 at-signs (@) at the beginning and end (Notes: Write in the language of the delimited text (probably Portuguese or English); The suggestions must also be delimited by 4 at-signs (@) at the beginning and end; Do not use line breaks). @@@@ %s @@@@",
+                "Write 3 suggestions with a maximum of 15 words each suggestion, only for the following text that is delimited by 4 at-signs (@) at the beginning and end (Notes: Write in the language of the delimited text (probably Portuguese or English); The suggestions must also be delimited by 4 at-signs (@) at the beginning and end; Do not use line breaks). @@@@ %s @@@@",
                 commentText
         );
     }
